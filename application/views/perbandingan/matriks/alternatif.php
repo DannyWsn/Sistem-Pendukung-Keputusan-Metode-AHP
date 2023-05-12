@@ -45,7 +45,7 @@ $jumlah = count($arr);
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: "<?= base_url(); ?>Matriks/update_alternatif",
+            url: "<?= base_url(); ?>Matriks/update_alternatif/<?= $id_penilaian ?>",
             data: $(this).serialize(),
             error: function () {
                 show_notice_alternatif('danger', 'Gagal menyimpan data');
@@ -76,7 +76,7 @@ $jumlah = count($arr);
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: "<?= base_url(); ?>Matriks/update_alternatif_prioritas",
+            url: "<?= base_url(); ?>Matriks/update_alternatif_prioritas/<?= $id_penilaian ?>",
             data: $(this).serialize(),
             error: function () {
 
@@ -239,6 +239,7 @@ $jumlah = count($arr);
     ?>
     <input type="hidden" name="crvalue" id="alternatif_crvalue" />
     <input type="hidden" name="subkriteriaid" value="<?= $subkriteriaid; ?>" />
+    
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead>
@@ -277,7 +278,7 @@ $jumlah = count($arr);
                             echo '<td><input type="number" min=1 id="alternatif_k' . $noUtama . 'b' . $noSub . '" class="bg-blue form-control form-control-sm alternatif_kolom' . $noSub . '" value="1" readonly="" title="alternatif_kolom' . $noSub . '"/></td>';
                         } else {
 
-                            $nilai = ambil_nilai_alternatif($subkriteriaid, $k2, $xxx);
+                            $nilai = ambil_nilai_alternatif($subkriteriaid, $k2, $xxx, $id_penilaian);
                             echo '<td><input type="number" max="9" step=".01" name="' . $newname . '" id="alternatif_k' . $noUtama . 'b' . $noSub . '" class="bg-white form-control form-control-sm input_number_alternatif alternatif_kolom' . $noSub . '" data-target="alternatif_k' . $noSub . 'b' . $noUtama . '" data-kolom="' . $noSub . '" value="' . $nilai . '" title="alternatif_kolom' . $noSub . '"/></td>';
                         }
                     }
@@ -318,6 +319,7 @@ $jumlah = count($arr);
         <div class="table-responsive">
             <?php echo form_open('#', array('id' => 'form_prio_alternatif')); ?>
             <input type="hidden" name="subkriteriaid" value="<?= $subkriteriaid; ?>" />
+            
             <table class="table table-bordered table-striped">
                 <thead>
                     <th colspan="<?= $jumlah + 5; ?>" class="text-center">Matrik Nilai Kriteria</th>

@@ -47,7 +47,7 @@ if (!empty($arr)) {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: "<?= base_url(); ?>Matriks/update_subkriteria",
+                url: "<?= base_url(); ?>Matriks/update_subkriteria/<?= $id_penilaian ?>",
                 data: $(this).serialize(),
                 error: function () {
                     show_notice_subkriteria('danger', 'Gagal menyimpan data');
@@ -78,7 +78,7 @@ if (!empty($arr)) {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: "<?= base_url(); ?>Matriks/update_subkriteria_prioritas",
+                url: "<?= base_url(); ?>Matriks/update_subkriteria_prioritas/<?= $id_penilaian ?>",
                 data: $(this).serialize(),
                 error: function () {
 
@@ -242,6 +242,7 @@ if (!empty($arr)) {
         ?>
         <input type="hidden" name="crvalue" id="subkriteria_crvalue" />
         <input type="hidden" name="kriteriaid" value="<?= $kriteriaid; ?>" />
+
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -279,7 +280,7 @@ if (!empty($arr)) {
                             if ($noSub == $noUtama) {
                                 echo '<td><input type="number" id="subkriteria_k' . $noUtama . 'b' . $noSub . '" class="bg-blue form-control form-control-sm subkriteria_kolom' . $noSub . '" value="1" readonly="" title="subkriteria_kolom' . $noSub . '"/></td>';
                             } else {
-                                $nilai = ambil_nilai_subkriteria($kriteriaid, $k2, $xxx);
+                                $nilai = ambil_nilai_subkriteria($kriteriaid, $k2, $xxx, $id_penilaian);
                                 echo '<td><input type="number" max="9" step=".01" pattern="^\d*(\.\d{0,2})?$" name="' . $newname . '" id="subkriteria_k' . $noUtama . 'b' . $noSub . '" class="form-control form-control-sm input_number_subkriteria subkriteria_kolom' . $noSub . '" data-target="subkriteria_k' . $noSub . 'b' . $noUtama . '" data-kolom="' . $noSub . '" value="' . $nilai . '" title="subkriteria_kolom' . $noSub . '"/></td>';
                             }
                         }
@@ -322,6 +323,7 @@ if (!empty($arr)) {
             <div class="table-responsive">
                 <?php echo form_open('#', array('id' => 'form_prio_subkriteria')); ?>
                 <input type="hidden" name="kriteriaid" value="<?= $kriteriaid; ?>" />
+
                 <table class="table table-bordered">
                     <thead>
                         <th colspan="<?= $jumlah + 5; ?>" class="text-center">Matrik Nilai Kriteria</th>

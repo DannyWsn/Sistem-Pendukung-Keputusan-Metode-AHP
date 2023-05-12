@@ -6,11 +6,14 @@ if (!function_exists('set_header_message')) {
 	{
 		$CI = &get_instance();
 
-		$CI->session->set_flashdata('message_header', array(
-			'tipe' => $tipe,
-			'title' => $title,
-			'message' => $message,
-		));
+		$CI->session->set_flashdata(
+			'message_header',
+			array(
+				'tipe' => $tipe,
+				'title' => $title,
+				'message' => $message,
+			)
+		);
 	}
 }
 
@@ -92,13 +95,14 @@ if (!function_exists('menu_active')) {
 }
 
 if (!function_exists('ambil_nilai_kriteria')) {
-	function ambil_nilai_kriteria($dari, $tujuan)
+	function ambil_nilai_kriteria($dari, $tujuan, $id_penilaian)
 	{
 		$CI = &get_instance();
 		$CI->load->library('m_db');
 		$s = array(
 			'kriteria_id_dari' => $dari,
 			'kriteria_id_tujuan' => $tujuan,
+			'id_penilaian' => $id_penilaian,
 		);
 		$item = $CI->m_db->get_row('kriteria_nilai', $s, 'nilai');
 		return $item;
@@ -106,7 +110,7 @@ if (!function_exists('ambil_nilai_kriteria')) {
 }
 
 if (!function_exists('ambil_nilai_subkriteria')) {
-	function ambil_nilai_subkriteria($kriteriaid, $dari, $tujuan)
+	function ambil_nilai_subkriteria($kriteriaid, $dari, $tujuan, $id_penilaian)
 	{
 		$CI = &get_instance();
 		$CI->load->library('m_db');
@@ -114,6 +118,7 @@ if (!function_exists('ambil_nilai_subkriteria')) {
 			'id_kriteria' => $kriteriaid,
 			'subkriteria_id_dari' => $dari,
 			'subkriteria_id_tujuan' => $tujuan,
+			'id_penilaian' => $id_penilaian,
 		);
 		$item = $CI->m_db->get_row('subkriteria_nilai', $s, 'nilai');
 		return $item;
@@ -121,7 +126,7 @@ if (!function_exists('ambil_nilai_subkriteria')) {
 }
 
 if (!function_exists('ambil_nilai_alternatif')) {
-	function ambil_nilai_alternatif($subkriteriaid, $dari, $tujuan)
+	function ambil_nilai_alternatif($subkriteriaid, $dari, $tujuan, $id_penilaian)
 	{
 		$CI = &get_instance();
 		$CI->load->library('m_db');
@@ -129,6 +134,7 @@ if (!function_exists('ambil_nilai_alternatif')) {
 			'id_subkriteria' => $subkriteriaid,
 			'alternatif_id_dari' => $dari,
 			'alternatif_id_tujuan' => $tujuan,
+			'id_penilaian' => $id_penilaian,
 		);
 		$item = $CI->m_db->get_row('alternatif_nilai', $s, 'nilai');
 		return $item;

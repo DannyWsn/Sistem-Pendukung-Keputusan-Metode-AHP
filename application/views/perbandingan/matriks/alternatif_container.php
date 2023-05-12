@@ -2,44 +2,24 @@
     <div class="container-fluid">
         <div class="row">
 
-            <select class="form-control" onchange="pilSubKrta(this)">
-                <option>Pilih Sub-Kriteria</option>
-                <?php
-                if (!empty($subkriteria)) {
-                    foreach ($subkriteria as $rk) {
-                        $jj = '';
-                        if ($rk->id_subkriteria == $rk->id_subkriteria) {
-                            $jj = 'selected="selected"';
+            <div class="col-12">
+                <select class="form-control" onchange="showData(this.value)">
+                    <option>Pilih Sub-Kriteria</option>
+                    <?php
+                    if (!empty($subkriteria)) {
+                        foreach ($subkriteria as $rk) {
+
+                            echo '<option value="' . $rk->id_subkriteria . '" >' . $rk->nama_kriteria." - ". $rk->nama_subkriteria . '</option>';
                         }
-                        echo '<option value="' . $rk->id_subkriteria . '" ' . $jj . '>' . $rk->nama_subkriteria . '</option>';
                     }
-                }
-                ?>
-            </select>
-
-            <div class="col-md-3">
-                <div class="card card-primary card-outline">
-                    <div class="card-body box-profile">
-
-
-
-                        <ul class="list-group list-group-unbordered mb-3">
-                            <?php
-                            if (!empty($subkriteria)) {
-                                foreach ($subkriteria as $rk) {
-                                    echo '<li class="list-group-item"><a style="color:black" href="javascript:;" onclick="showData(' . $rk->id_subkriteria . ');">' . $rk->nama_subkriteria . '</a></li>';
-                                }
-                            }
-                            ?>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.col -->
-
-                <!-- /.card -->
+                    ?>
+                </select>
             </div>
-            <div class="col-md-9">
-                <div id="matrik_alternatif"></div>
+
+            <div class="col-12 mt-4">
+                <div id="matrik_alternatif">
+                    <p>*Silahkan pilih terlebih dahulu Sub-Kriteria pada opsi diatas</p>
+                </div>
             </div>
         </div>
         <!-- /.row -->
@@ -51,17 +31,18 @@
         $.ajax({
             type: 'get',
             dataType: 'html',
-            url: "<?= base_url('Matriks/alternatif'); ?>",
+            url: "<?= base_url('Matriks/alternatif/' . $id_penilaian); ?>",
             data: "subkriteria=" + id,
-            error: function() {
+            error: function () {
                 $("#matrik_alternatif").html('Gagal mengambil data matrik');
             },
-            beforeSend: function() {
+            beforeSend: function () {
                 $("#matrik_alternatif").html('Mengambil data matrik. Tunggu sebentar');
             },
-            success: function(x) {
+            success: function (x) {
                 console.log(x);
                 $("#matrik_alternatif").html(x);
+                $("#matrik_alternatif").prop;
             },
         });
     }

@@ -9,6 +9,10 @@ class Penilaian extends CI_Controller
         parent::__construct();
         $this->load->model('penilaian_model');
         $this->load->library('form_validation');
+        $this->load->model('Kriteria_model', 'mod_kriteria');
+        $this->load->model('Subkriteria_model', 'mod_subkriteria');
+        $this->load->model('Alternatif_model', 'mod_alternatif');
+        $this->load->model('Frontend_model', 'fm');
     }
 
     public function index()
@@ -70,26 +74,32 @@ class Penilaian extends CI_Controller
     }
 
 
-    function rank()
+    function rank($id_penilaian)
     {
 
         $output = array();
 
         $alternatif = $this->mod_alternatif->alternatif_data();
         foreach ($alternatif as $key => $value) {
-            $alternatif[$key]->nilai = $this->mod_alternatif->alternatif_hasil_by_id($value->id_alternatif);
+            $alternatif[$key]->nilai = $this->mod_alternatif->alternatif_hasil_by_id(
+                $value->id_alternatif,
+                $id_penilaian
+            );
         }
         $output["alternatif"] = $alternatif;
 
-        $output["kriteria"] = $this->mod_kriteria->kriteria_data_with_hasil();
-        $output['subkriteria'] = $this->mod_subkriteria->subkriteria_data_with_hasil();
+        $output["kriteria"] = $this->mod_kriteria->kriteria_data_with_hasil($id_penilaian);
+        $output['subkriteria'] = $this->mod_subkriteria->subkriteria_data_with_hasil($id_penilaian);
         $output['data'] = $this->fm->tampilkan_data()->result();
 
+
+
+      
         // $this->template->load('template/backend/dashboard', 'perbandingan/prosesview', $output);
         $this->load->view('perbandingan/prosesview', $output);
     }
 
-    function printRank()
+    function printRank($id_penilaian)
     {
         return $this->load->view('perbandingan/cetak');
     }

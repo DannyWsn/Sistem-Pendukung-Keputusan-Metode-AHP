@@ -1,28 +1,28 @@
 <script type="text/javascript">
-function proseshitung() {
-    $.ajax({
-        type: 'get',
-        dataType: 'json',
-        url: "<?= base_url('Perbandingan/proseshitung'); ?>",
-        error: function() {
-            $("#respon").html('Proses hitung seleksi supplier gagal');
-            $("#error").show();
-        },
-        beforeSend: function() {
-            $("#error").hide();
-            $("#respon").html("Sedang bekerja, tunggu sebentar");
-        },
-        success: function(x) {
-            if (x.status == "ok") {
-                alert('Proses seleksi berhasil. Halaman akan direfresh');
-                window.location = window.location;
-            } else {
-                $("#respon").html('Proses hitung seleksi Alternatif gagal');
+    function proseshitung() {
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: "<?= base_url('Perbandingan/proseshitung'); ?>",
+            error: function () {
+                $("#respon").html('Proses hitung seleksi supplier gagal');
                 $("#error").show();
-            }
-        },
-    });
-}
+            },
+            beforeSend: function () {
+                $("#error").hide();
+                $("#respon").html("Sedang bekerja, tunggu sebentar");
+            },
+            success: function (x) {
+                if (x.status == "ok") {
+                    alert('Proses seleksi berhasil. Halaman akan direfresh');
+                    window.location = window.location;
+                } else {
+                    $("#respon").html('Proses hitung seleksi Alternatif gagal');
+                    $("#error").show();
+                }
+            },
+        });
+    }
 </script>
 
 <div id="respon" class="hidden-print"></div>
@@ -60,49 +60,51 @@ function proseshitung() {
                                 <td>Kriteria/Subkriteria</td>
                                 <td>Bobot</td>
                                 <?php
-                                    foreach($this->m_db->get as $rss)
-                                    {
-                                        echo '<td>'.$rss['detail'].'</td>';
-                                    }
+                                foreach ($this->m_db->get as $rss) {
+                                    echo '<td>' . $rss['detail'] . '</td>';
+                                }
                                 ?>
                             </thead>
                             <?php
 
 
-                                $dAlternatif = $this->m_db->get_data('alternatif');
-                                if (!empty($dAlternatif)) {
+                            $dAlternatif = $this->m_db->get_data('alternatif');
+                            if (!empty($dAlternatif)) {
 
-                                    foreach ($dAlternatif as $rAlternatif) {
-                                        $alternatifID = $rAlternatif->id_alternatif;
-                                        $supplierID = $rAlternatif->id_supplier;
-                                        $nama_supplier = field_value('supplier', 'id_supplier', $supplierID, 'nama_supplier');
+                                foreach ($dAlternatif as $rAlternatif) {
+                                    $alternatifID = $rAlternatif->id_alternatif;
+                                    $supplierID = $rAlternatif->id_supplier;
+                                    $nama_supplier = field_value('supplier', 'id_supplier', $supplierID, 'nama_supplier');
 
-                                ?>
-                            <tr>
-                                <td><?= $nama_supplier; ?></td>
-                                <?php
-                                            $total = 0;
-                                            if (!empty($dKriteria)) {
-                                                foreach ($dKriteria as $rKriteria) {
-                                                    $kriteriaid = $rKriteria->id_kriteria;
-                                                    $subkriteria = alternatif_nilai($alternatifID, $kriteriaid);
-                                                    $nilaiID = field_value('subkriteria', 'id_subkriteria', $subkriteria, 'id_nilai');
-                                                    $nilai = field_value('nilai_kategori', 'id_nilai', $nilaiID, 'nama_nilai');
-                                                    $prioritas = ambil_prioritas($subkriteria);
-                                                    echo '<td>' . number_format((float)$prioritas, 2) . '</td>';
-                                                }
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?= $nama_supplier; ?>
+                                        </td>
+                                        <?php
+                                        $total = 0;
+                                        if (!empty($dKriteria)) {
+                                            foreach ($dKriteria as $rKriteria) {
+                                                $kriteriaid = $rKriteria->id_kriteria;
+                                                $subkriteria = alternatif_nilai($alternatifID, $kriteriaid);
+                                                $nilaiID = field_value('subkriteria', 'id_subkriteria', $subkriteria, 'id_nilai');
+                                                $nilai = field_value('nilai_kategori', 'id_nilai', $nilaiID, 'nama_nilai');
+                                                $prioritas = ambil_prioritas($subkriteria);
+                                                echo '<td>' . number_format((float) $prioritas, 2) . '</td>';
                                             }
-                                            ?>
-                                <td><?= number_format($total, 2); ?></td>
-                                <!-- <td><?= ucwords($rAlternatif->status); ?></td> -->
+                                        }
+                                        ?>
+                                        <td>
+                                            <?= number_format($total, 2); ?>
+                                        </td>
+                                        <!-- <td><?= ucwords($rAlternatif->status); ?></td> -->
 
-                            </tr>
-                            <?php
+                                    </tr>
+                                    <?php
 
-                                    }
-                                } else {
-                                    return false;
                                 }
+                            } else {
+                                return false;
                             }
                             ?>
 

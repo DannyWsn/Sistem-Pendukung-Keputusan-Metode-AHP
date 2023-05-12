@@ -29,11 +29,12 @@ class Kriteria_model extends CI_Model
         return $d;
     }
 
-    function kriteria_data_with_hasil()
+    function kriteria_data_with_hasil($id_penilaian)
     {
         $this->db->select('*');
         $this->db->from($this->tb_kriteria);
         $this->db->join($this->tb_kriteria_hasil, $this->tb_kriteria_hasil . '.' . $this->id_kriteria . '=' . $this->tb_kriteria . '.' . $this->id_kriteria, "left");
+        $this->db->where("id_penilaian", $id_penilaian);
         $d = $this->db->get();
         return $d->result();
     }

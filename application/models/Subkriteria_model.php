@@ -7,6 +7,7 @@ class Subkriteria_model extends CI_Model
 {
 
     public $table = 'subkriteria';
+    public $join1 = 'kriteria';
     public $table_hasil = 'subkriteria_hasil';
     public $id = 'id_subkriteria';
     public $order = 'ASC';
@@ -20,15 +21,19 @@ class Subkriteria_model extends CI_Model
     // get all
     function get_all()
     {
+        $this->db->join($this->join1, $this->join1 . '.' . $this->id_kriteria . "=" . $this->table . '.' . $this->id_kriteria);
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
+
+
     }
 
-    function subkriteria_data_with_hasil()
+    function subkriteria_data_with_hasil($id_penilaian)
     {
         $this->db->select('*');
         $this->db->from($this->table);
         $this->db->join($this->table_hasil, $this->table_hasil . '.' . $this->id . '=' . $this->table . '.' . $this->id, "left");
+        $this->db->where("id_penilaian", $id_penilaian);
         $d = $this->db->get();
         return $d->result();
     }

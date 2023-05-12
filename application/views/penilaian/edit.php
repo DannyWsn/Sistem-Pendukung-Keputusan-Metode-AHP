@@ -25,7 +25,8 @@
                         <h3 class="card-title">Data Umum</h3>
 
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                    class="fas fa-minus"></i>
                             </button>
                         </div>
                         <!-- /.card-tools -->
@@ -38,13 +39,15 @@
                         <div class="form-group row">
                             <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= $penilaian->tanggal ?>" required>
+                                <input type="date" class="form-control" id="tanggal" name="tanggal"
+                                    value="<?= $penilaian->tanggal ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?= $penilaian->keterangan ?>">
+                                <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                    value="<?= $penilaian->keterangan ?>">
                             </div>
                         </div>
                     </div>
@@ -60,7 +63,12 @@
 
             <div class="col-12">
                 <?php
-                $this->load->view('perbandingan/perbandingan_list');
+                $this->load->view(
+                    'perbandingan/perbandingan_list',
+                    array(
+                        'id_penilaian' => $penilaian->id_penilaian
+                    )
+                );
                 ?>
             </div>
 
@@ -79,15 +87,15 @@
     $.ajax({
         type: 'get',
         dataType: 'html',
-        url: "<?= base_url('Penilaian/rank'); ?>",
+        url: "<?= base_url('Penilaian/rank/'.$penilaian->id_penilaian); ?>",
         data: $(this).serialize(),
-        error: function() {
+        error: function () {
             $("#perangkingan").html('Gagal mengambil data perangkingan');
         },
-        beforeSend: function() {
+        beforeSend: function () {
             $("#perangkingan").html('Mengambil data... Tunggu sebentar');
         },
-        success: function(x) {
+        success: function (x) {
             $("#perangkingan").html(x);
         },
     });

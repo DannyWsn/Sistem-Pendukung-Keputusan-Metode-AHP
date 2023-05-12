@@ -45,7 +45,7 @@ $jumlah = count($arr);
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: "<?= base_url(); ?>Matriks/update_kriteria",
+            url: "<?= base_url(); ?>Matriks/update_kriteria/<?= $id_penilaian ?>",
             data: $(this).serialize(),
             error: function () {
                 show_notice_kriteria('danger', 'Gagal menyimpan data');
@@ -75,7 +75,7 @@ $jumlah = count($arr);
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: "<?= base_url(); ?>Matriks/update_kriteria_prioritas",
+            url: "<?= base_url(); ?>Matriks/update_kriteria_prioritas/<?= $id_penilaian ?>",
             data: $(this).serialize(),
             error: function () {
 
@@ -216,6 +216,7 @@ $jumlah = count($arr);
     echo form_open('#', array('class' => 'form-horizontal', 'id' => 'form_entri_kriteria'));
     ?>
     <input type="hidden" name="crvalue" id="kriteria_crvalue" />
+    
     <div class="row">
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
@@ -252,7 +253,7 @@ $jumlah = count($arr);
                             if ($baris == $kolom) {
                                 echo '<td class="col-xs-1"><input type="number" id="kriteria_k' . $kolom . 'b' . $baris . '" class="bg-blue form-control form-control-sm kriteria_kolom' . $baris . '" value="1" readonly="" title="kriteria_kolom' . $baris . '"/></td>';
                             } else {
-                                $nilai = ambil_nilai_kriteria($k2, $xxx);
+                                $nilai = ambil_nilai_kriteria($k2, $xxx, $id_penilaian);
                                 echo '<td><input type="number" max="9" step=".01" name="' . $newname . '" id="kriteria_k' . $kolom . 'b' . $baris . '" class="form-control form-control-sm input_number_kriteria kriteria_kolom' . $baris . '" data-target="kriteria_k' . $baris . 'b' . $kolom . '" data-kolom="' . $baris . '" value="' . $nilai . '"  title="kriteria_kolom' . $baris . '"/></td>';
                             }
                         }
@@ -292,6 +293,7 @@ $jumlah = count($arr);
 
     <div class="table-responsive">
         <?php echo form_open('#', array('id' => 'form_prio_kriteria')); ?>
+        
         <table class="table table-bordered table-striped">
             <thead>
                 <th colspan="<?= $jumlah + 3; ?>" class="text-center">Matrik Nilai Kriteria</th>

@@ -13,23 +13,32 @@
 
         <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="custom-content-below-kriteria-tab" data-toggle="pill" href="#custom-content-below-kriteria" role="tab" aria-controls="custom-content-below-kriteria" aria-selected="true">Bobot Kriteria</a>
+                <a class="nav-link active" id="custom-content-below-kriteria-tab" data-toggle="pill"
+                    href="#custom-content-below-kriteria" role="tab" aria-controls="custom-content-below-kriteria"
+                    aria-selected="true">Bobot Kriteria</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="custom-content-below-subkriteria-tab" data-toggle="pill" href="#custom-content-below-subkriteria" role="tab" aria-controls="custom-content-below-subkriteria" aria-selected="false">Bobot SubKriteria</a>
+                <a class="nav-link" id="custom-content-below-subkriteria-tab" data-toggle="pill"
+                    href="#custom-content-below-subkriteria" role="tab" aria-controls="custom-content-below-subkriteria"
+                    aria-selected="false">Bobot SubKriteria</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="custom-content-below-alternatif-tab" data-toggle="pill" href="#custom-content-below-alternatif" role="tab" aria-controls="custom-content-below-alternatif" aria-selected="false">Bobot Alternatif</a>
+                <a class="nav-link" id="custom-content-below-alternatif-tab" data-toggle="pill"
+                    href="#custom-content-below-alternatif" role="tab" aria-controls="custom-content-below-alternatif"
+                    aria-selected="false">Bobot Alternatif</a>
             </li>
         </ul>
         <div class="tab-content" id="custom-content-below-tabContent">
-            <div class="tab-pane fade active show" id="custom-content-below-kriteria" role="tabpanel" aria-labelledby="custom-content-below-kriteria-tab">
+            <div class="tab-pane fade active show" id="custom-content-below-kriteria" role="tabpanel"
+                aria-labelledby="custom-content-below-kriteria-tab">
                 <div class="mt-2" id="matrik"></div>
             </div>
-            <div class="tab-pane fade" id="custom-content-below-subkriteria" role="tabpanel" aria-labelledby="custom-content-below-subkriteria-tab">
+            <div class="tab-pane fade" id="custom-content-below-subkriteria" role="tabpanel"
+                aria-labelledby="custom-content-below-subkriteria-tab">
                 <div class="mt-2" id="submatrik"></div>
             </div>
-            <div class="tab-pane fade" id="custom-content-below-alternatif" role="tabpanel" aria-labelledby="custom-content-below-alternatif-tab">
+            <div class="tab-pane fade" id="custom-content-below-alternatif" role="tabpanel"
+                aria-labelledby="custom-content-below-alternatif-tab">
                 <div class="mt-2" id="altmatrik"></div>
             </div>
 
@@ -38,18 +47,19 @@
     </div>
 </div>
 <script type="text/javascript">
+
     $.ajax({
         type: 'get',
         dataType: 'html',
-        url: "<?= base_url('Matriks/kriteria'); ?>",
+        url: "<?= base_url('Matriks/kriteria/'.$id_penilaian); ?>",
         data: $(this).serialize(),
-        error: function() {
+        error: function () {
             $("#matrik").html('Gagal mengambil data matrik');
         },
-        beforeSend: function() {
+        beforeSend: function () {
             $("#matrik").html('Mengambil data matrik. Tunggu sebentar');
         },
-        success: function(x) {
+        success: function (x) {
             $("#matrik").html(x);
         },
     });
@@ -58,30 +68,30 @@
     $.ajax({
         type: 'get',
         dataType: 'html',
-        url: "<?= base_url('Matriks/subkriteria_container') ?>",
+        url: "<?= base_url('Matriks/subkriteria_container/'.$id_penilaian) ?>",
         data: "",
-        error: function() {
+        error: function () {
             $("#submatrik").html('Gagal mengambil data matrik sub kriteria');
         },
-        beforeSend: function() {
+        beforeSend: function () {
             $("#submatrik").html('Loading, sedang mengambil data matrik');
         },
-        success: function(x) {
+        success: function (x) {
             $("#submatrik").html(x);
         }
     });
     $.ajax({
         type: 'get',
         dataType: 'html',
-        url: "<?= base_url('Matriks/alternatif_container'); ?>",
+        url: "<?= base_url('Matriks/alternatif_container/'.$id_penilaian); ?>",
         data: "",
-        error: function() {
+        error: function () {
             $("#altmatrik").html('Gagal mengambil data matrik alternatif');
         },
-        beforeSend: function() {
+        beforeSend: function () {
             $("#altmatrik").html('Mengambil data matrik alternatif. Tunggu sebentar');
         },
-        success: function(x) {
+        success: function (x) {
             $("#altmatrik").html(x);
         },
     });

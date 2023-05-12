@@ -192,7 +192,7 @@
         var printContents = document.getElementById('ctkhsl').innerHTML;
         var width = window.innerWidth * 0.75;
         var height = width * window.innerHeight / window.innerWidth;
-        var ctkWin = window.open('<?php echo base_url('Penilaian/printRank') ?>', 'newwindow', 'width=' + width +
+        var ctkWin = window.open('<?php echo base_url('Penilaian/printRank/'.$id_penilaian) ?>', 'newwindow', 'width=' + width +
             ', height=' +
             height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2))
         printContents = printContents.replace(/table table-bordered table-striped/g, "");

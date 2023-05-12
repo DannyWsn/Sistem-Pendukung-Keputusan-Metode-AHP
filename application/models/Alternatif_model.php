@@ -17,9 +17,14 @@ class Alternatif_model extends CI_Model
 		$d = $this->db->get();
 		return $d->result();
 	}
-	function alternatif_hasil_by_id($id)
-	{;
-		$d = $this->db->get_where('alternatif_hasil', array('id_alternatif' => $id));
+	function alternatif_hasil_by_id($id_alternatif, $id_penilaian)
+	{
+		;
+		$d = $this->db->get_where('alternatif_hasil', array(
+			'id_alternatif' => $id_alternatif,
+			'id_penilaian' => $id_penilaian,
+		)
+		);
 		return $d->result();
 	}
 
