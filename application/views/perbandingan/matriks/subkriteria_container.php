@@ -32,7 +32,7 @@ function showsubdata(kriteria) {
     $.ajax({
         type: 'get',
         dataType: 'html',
-        url: "<?= base_url('Perbandingan/getsub'); ?>",
+        url: "<?= base_url('Matriks/subkriteria'); ?>",
         data: "kriteria=" + kriteria,
         error: function() {
             $("#matriksub").html('Gagal mengambil data matrik');

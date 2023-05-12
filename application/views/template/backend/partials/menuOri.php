@@ -52,7 +52,7 @@
 				<li <?php if ($page == "banding" || $page == "Banding") echo 'class="active opened active multiple-expanded" '; ?>>
 					<?= anchor('Perbandingan/banding', '<span class=entypo-switch> Perbandingan</span>'); ?></li>
 				<li <?php if ($page == "hasil" || $page == "Hasil") echo 'class="active opened active multiple-expanded" '; ?>>
-					<?= anchor('Perbandingan/hasil', '<span class=entypo-chart-bar>Hasil Perhitungan</span>'); ?></li>
+					<?= anchor('Penilaian/rank', '<span class=entypo-chart-bar>Hasil Perhitungan</span>'); ?></li>
 			</ul>
 		</li>
 

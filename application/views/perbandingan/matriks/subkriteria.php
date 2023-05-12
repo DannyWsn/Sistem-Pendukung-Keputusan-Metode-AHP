@@ -1,116 +1,116 @@
 <?php
-
-
 if (!empty($arr)) {
 
     $jumlah = count($arr);
 
-?>
+    ?>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             <?php
             if (!empty($arr)) {
-            ?>
-                hitungMatrixSub();
-            <?php
+                ?>
+                hitung_matrik_subkriteria();
+                <?php
             }
             ?>
 
-            $(".inputnumbersub").each(function() {
-                $(this).change(function() {
+            $(".input_number_subkriteria").each(function () {
+                $(this).change(function () {
 
                     var dtarget = $(this).attr('data-target');
                     var dkolom = $(this).attr('data-kolom');
                     var jumlah = $(this).val();
-                    var rumus = 1 / parseFloat(jumlah);
-                    var fx = rumus;
+                    jumlah = parseFloat(jumlah);
+                    if (jumlah > 9) {
+                        jumlah = 9.0;
+                    }
+                    var fx = 1 / jumlah;
+                    $(this).val(jumlah.toFixed(2));
                     $("#" + dtarget).val(fx.toFixed(2));
 
 
-                    hitungMatrixSub()
+                    hitung_matrik_subkriteria()
 
                 });
             });
         })
 
-        function hitungMatrixSub() {
-            totalsub();
-            mnksub();
-            mptbsub();
-            rksub();
+        function hitung_matrik_subkriteria() {
+            total_subkriteria();
+            mnk_subkriteria();
+            mptb_subkriteria();
+            rk_subkriteria();
         }
-        $("#formentrisub").submit(function(e) {
+        $("#form_entri_subkriteria").submit(function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: "<?= base_url(); ?>Perbandingan/updatesub",
+                url: "<?= base_url(); ?>Matriks/update_subkriteria",
                 data: $(this).serialize(),
-                error: function() {
-                    shownoticesub('danger', 'Gagal menyimpan data');
-                    $("#formentrisub select").removeAttr("disabled");
-                    $("#formentrisub button").removeAttr("disabled");
+                error: function () {
+                    show_notice_subkriteria('danger', 'Gagal menyimpan data');
+                    $("#form_entri_subkriteria select").removeAttr("disabled");
+                    $("#form_entri_subkriteria button").removeAttr("disabled");
                 },
-                beforeSend: function() {
-
-                    console.log($(this).serialize());
-                    $("#formentrisub select").attr('disabled', 'disabled');
-                    $("#formentrisub button").attr('disabled', 'disabled');
-                    shownoticesub('info', 'Tunggu sebentar,lagi menyimpan data');
+                beforeSend: function () {
+                    $("#form_entri_subkriteria select").attr('disabled', 'disabled');
+                    $("#form_entri_subkriteria button").attr('disabled', 'disabled');
+                    show_notice_subkriteria('info', 'Tunggu sebentar,lagi menyimpan data');
                 },
-                success: function(x) {
+                success: function (x) {
                     if (x.status == "ok") {
-                        $("#prioformsub").trigger('submit');
-                        shownoticesub('success', x.msg);
+                        $("#form_prio_subkriteria").trigger('submit');
+                        show_notice_subkriteria('success', x.msg);
                     } else {
-                        shownoticesub('danger', x.msg);
+                        show_notice_subkriteria('danger', x.msg);
                     }
-                    $("#formentrisub select").removeAttr("disabled");
-                    $("#formentrisub button").removeAttr("disabled");
+                    $("#form_entri_subkriteria select").removeAttr("disabled");
+                    $("#form_entri_subkriteria button").removeAttr("disabled");
                 },
             });
         });
 
 
-        $("#prioformsub").submit(function(e) {
+        $("#form_prio_subkriteria").submit(function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: "<?= base_url(); ?>Perbandingan/updatesubprioritas",
+                url: "<?= base_url(); ?>Matriks/update_subkriteria_prioritas",
                 data: $(this).serialize(),
-                error: function() {
+                error: function () {
 
                 },
-                beforeSend: function() {
+                beforeSend: function () {
                     console.log($(this).serialize());
                 },
-                success: function(x) {
+                success: function (x) {
 
                 },
             });
         });
 
-        function shownoticesub(tipe, pesan) {
-            $("#respon").html('<div class="alert alert-' + tipe + '">' + pesan + '</div>');
-            $("#respon").show('fadeIn');
-            if ($("#respon").is(":visible")) {
-                setTimeout(function() {
-                    $("#respon").hide('fadeOut');
+        function show_notice_subkriteria(tipe, pesan) {
+            $("#respon_subkriteria").html('<div class="alert alert-' + tipe + '">' + pesan + '</div>');
+            $("#respon_subkriteria").show('fadeIn');
+            if ($("#respon_subkriteria").is(":visible")) {
+                setTimeout(function () {
+                    $("#respon_subkriteria").hide('fadeOut');
                 }, 3000);
             }
         }
 
 
-        function showmatrixsub() {
-            $("#matrikdivsub").toggle('fade');
+        function show_matrik_subkriteria() {
+            $("#div_matrik_subkriteria").toggle('fade');
         }
 
-        function totalsub() {
+        function total_subkriteria() {
             for (i = 1; i <= <?= $jumlah; ?>; i++) {
                 var sum = 0;
-                $(".kolom" + i).each(function() {
+                $(".subkriteria_kolom" + i).each(function () {
                     var n = $(this).val();
                     if (n == undefined || n == '') {
                         n = 0;
@@ -118,32 +118,32 @@ if (!empty($arr)) {
                     sum += parseFloat(n);
                 });
                 var fx = sum;
-                $("#total" + i).val(fx.toFixed(2));
+                $("#subkriteria_total" + i).val(fx.toFixed(2));
             }
         }
 
-        function mnksub() {
+        function mnk_subkriteria() {
             var mm = [];
             for (i = 1; i <= <?= $jumlah; ?>; i++) {
                 var jml = 0;
                 for (x = 1; x <= <?= $jumlah; ?>; x++) {
-                    var vtarget = $("#k" + i + "b" + x).val();
-                    var vkolom = $("#total" + x).val();
+                    var vtarget = $("#subkriteria_k" + i + "b" + x).val();
+                    var vkolom = $("#subkriteria_total" + x).val();
                     var rumus = parseFloat(vtarget) / parseFloat(vkolom);
                     var fx = rumus;
                     jml += parseFloat(rumus);
-                    $("#mn-k" + i + "b" + x).val(fx.toFixed(2));
+                    $("#subkriteria_mn-k" + i + "b" + x).val(fx.toFixed(2));
                     //$("#mn-k"+i+"b"+x).val(i+" "+x);						
                 }
                 var jumlahmnk = jml;
                 var prio = parseFloat(jml) / parseFloat(<?= $jumlah; ?>);
                 var totprio = prio;
-                $("#jml-b" + i).val(jumlahmnk.toFixed(2));
-                $("#pri-b" + i).val(totprio.toFixed(2));
+                $("#subkriteria_jml-b" + i).val(jumlahmnk.toFixed(2));
+                $("#subkriteria_pri-b" + i).val(totprio.toFixed(2));
                 mm.push(totprio);
             }
             maksprio = arrayMax(mm);
-            mnk2sub();
+            mnk_2_subkriteria();
         }
 
         function arrayMax(arr) {
@@ -157,34 +157,34 @@ if (!empty($arr)) {
             return max;
         };
 
-        function mnk2sub() {
+        function mnk_2_subkriteria() {
             var i = [];
             for (i = 1; i <= <?= $jumlah; ?>; i++) {
-                var prio = $("#pri-b" + i).val();
+                var prio = $("#subkriteria_pri-b" + i).val();
                 var rumus = parseFloat(prio) / parseFloat(maksprio);
-                $("#prisub-b" + i).val(rumus.toFixed(2));
-                $("#prisub-bhasil" + i).val(rumus.toFixed(2));
+                $("#subkriteria_prisub-b" + i).val(rumus.toFixed(2));
+                $("#subkriteria_prisub-bhasil" + i).val(rumus.toFixed(2));
             }
         }
 
-        function mptbsub() {
+        function mptb_subkriteria() {
             for (i = 1; i <= <?= $jumlah; ?>; i++) {
                 var jml = 0;
                 for (x = 1; x <= <?= $jumlah; ?>; x++) {
-                    var prio = $("#pri-b" + x).val();
-                    var nilai = $("#k" + i + "b" + x).val();
+                    var prio = $("#subkriteria_pri-b" + x).val();
+                    var nilai = $("#subkriteria_k" + i + "b" + x).val();
                     var rumus = parseFloat(nilai) * parseFloat(prio);
                     var fx = rumus;
                     jml += parseFloat(rumus);
                     //$("#mptb-k"+i+"b"+x).val(prio+"*"+nilai);
-                    $("#mptb-k" + i + "b" + x).val(fx.toFixed(2));
+                    $("#subkriteria_mptb-k" + i + "b" + x).val(fx.toFixed(2));
                 }
                 var jumlahmnk = jml;
-                $("#jmlmptb-b" + i).val(jumlahmnk.toFixed(2));
+                $("#subkriteria_jmlmptb-b" + i).val(jumlahmnk.toFixed(2));
             }
         }
 
-        function rksub() {
+        function rk_subkriteria() {
             const irList = [
                 0.00,
                 0.00,
@@ -208,39 +208,39 @@ if (!empty($arr)) {
             var ir = irList[jumlah];
             var total = 0;
             for (i = 1; i <= jumlah; i++) {
-                var prio = $("#pri-b" + i).val();
-                var jml = $("#jmlmptb-b" + i).val();
+                var prio = $("#subkriteria_pri-b" + i).val();
+                var jml = $("#subkriteria_jmlmptb-b" + i).val();
                 var hasil = parseFloat(jml) / parseFloat(prio);
                 var fx = hasil;
                 total += hasil;
-                $("#jmlrk-b" + i).val(jml);
-                $("#priork-b" + i).val(prio);
-                $("#hasilrk-b" + i).val(fx.toFixed(2));
+                $("#subkriteria_jmlrk-b" + i).val(jml);
+                $("#subkriteria_priork-b" + i).val(prio);
+                $("#subkriteria_hasilrk-b" + i).val(fx.toFixed(2));
             }
             var fx2 = total / parseFloat(jumlah);
-            $("#totalrk").val(fx2.toFixed(2));
-            $("#sumrk").val(fx2.toFixed(2));
+            $("#subkriteria_totalrk").val(fx2.toFixed(2));
+            $("#subkriteria_sumrk").val(fx2.toFixed(2));
             var summaks = parseFloat(total) / parseFloat(jumlah);
             var fx_summaks = summaks;
-            $("#summaks").val(fx_summaks.toFixed(2));
+            $("#subkriteria_summaks").val(fx_summaks.toFixed(2));
             var ci = ((parseFloat(summaks) - parseFloat(jumlah)) / (parseFloat(jumlah) - 1));
             var fx_ci = ci;
-            $("#sumci").val(fx_ci.toFixed(2));
+            $("#subkriteria_sumci").val(fx_ci.toFixed(2));
             var cr = parseFloat(ci) / parseFloat(ir);
             var fx_cr = cr;
-            $("#sumcr").val(fx_cr.toFixed(2));
-            $("#crvalue").val(fx_cr.toFixed(2));
+            $("#subkriteria_sumcr").val(fx_cr.toFixed(2));
+            $("#subkriteria_crvalue").val(fx_cr.toFixed(2));
         }
     </script>
 
-    <div id="respon"></div>
+    <div id="respon_subkriteria"></div>
 
     <div id="entri" class="col-md-12">
         <?php
         echo validation_errors();
-        echo form_open('#', array('class' => 'form-horizontal', 'id' => 'formentrisub'));
+        echo form_open('#', array('class' => 'form-horizontal', 'id' => 'form_entri_subkriteria'));
         ?>
-        <input type="hidden" name="crvalue" id="crvalue" />
+        <input type="hidden" name="crvalue" id="subkriteria_crvalue" />
         <input type="hidden" name="kriteriaid" value="<?= $kriteriaid; ?>" />
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -253,9 +253,11 @@ if (!empty($arr)) {
                     <th>Kriteria</th>
                     <?php
                     foreach ($arr as $k => $v) {
-                    ?>
-                        <th><?= $v; ?></th>
-                    <?php
+                        ?>
+                        <th>
+                            <?= $v; ?>
+                        </th>
+                        <?php
                     }
                     ?>
                 </thead>
@@ -275,16 +277,10 @@ if (!empty($arr)) {
                             $newname = $k2 . "[" . $xxx . "]";
                             $noSub += 1;
                             if ($noSub == $noUtama) {
-                                echo '<td><input type="number" id="k' . $noUtama . 'b' . $noSub . '" class="bg-blue form-control form-control-sm kolom' . $noSub . '" value="1" readonly="" title="kolom' . $noSub . '"/></td>';
+                                echo '<td><input type="number" id="subkriteria_k' . $noUtama . 'b' . $noSub . '" class="bg-blue form-control form-control-sm subkriteria_kolom' . $noSub . '" value="1" readonly="" title="subkriteria_kolom' . $noSub . '"/></td>';
                             } else {
-
-                                if ($noUtama > $noSub) {
-                                    $nilai = ambil_nilai_subkriteria($kriteriaid, $k2, $xxx);
-                                    echo '<td><input type="text" name="' . $newname . '" id="k' . $noUtama . 'b' . $noSub . '" class="form-control form-control-sm inputnumbersub kolom' . $noSub . '" data-target="k' . $noSub . 'b' . $noUtama . '" data-kolom="' . $noSub . '" value="' . $nilai . '" title="kolom' . $noSub . '"/></td>';
-                                } else {
-                                    $nilai = ambil_nilai_subkriteria($kriteriaid, $k2, $xxx);
-                                    echo '<td><input type="text" name="' . $newname . '" id="k' . $noUtama . 'b' . $noSub . '" class="form-control form-control-sm inputnumbersub kolom' . $noSub . '" data-target="k' . $noSub . 'b' . $noUtama . '" data-kolom="' . $noSub . '" value="' . $nilai . '" title="kolom' . $noSub . '"/></td>';
-                                }
+                                $nilai = ambil_nilai_subkriteria($kriteriaid, $k2, $xxx);
+                                echo '<td><input type="number" max="9" step=".01" pattern="^\d*(\.\d{0,2})?$" name="' . $newname . '" id="subkriteria_k' . $noUtama . 'b' . $noSub . '" class="form-control form-control-sm input_number_subkriteria subkriteria_kolom' . $noSub . '" data-target="subkriteria_k' . $noSub . 'b' . $noUtama . '" data-kolom="' . $noSub . '" value="' . $nilai . '" title="subkriteria_kolom' . $noSub . '"/></td>';
                             }
                         }
                         echo '</tr>';
@@ -296,9 +292,11 @@ if (!empty($arr)) {
                         <td>Jumlah</td>
                         <?php
                         for ($h = 1; $h <= $jumlah; $h++) {
-                        ?>
-                            <td><input type="text" id="total<?= $h; ?>" class="bg-white form-control form-control-sm" value="0" title="total<?= $h; ?>" readonly="" /></td>
-                        <?php
+                            ?>
+                            <td><input type="text" id="subkriteria_total<?= $h; ?>"
+                                    class="bg-white form-control form-control-sm" value="0" title="subkriteria_total<?= $h; ?>"
+                                    readonly="" /></td>
+                            <?php
                         }
                         ?>
                     </tr>
@@ -308,7 +306,7 @@ if (!empty($arr)) {
 
         <div class="pull-left">
             <!-- <a href="javascript:;" onclick="hitung();" class="btn btn-primary">Hitung</a>  -->
-            <a href="javascript:;" onclick="showmatrixsub();" class="btn btn-info">Lihat Matriks</a>
+            <a href="javascript:;" onclick="show_matrik_subkriteria();" class="btn btn-info">Lihat Matriks</a>
             <button type="submit" class="btn btn-success">Simpan Kriteria</button>
         </div>
 
@@ -319,10 +317,10 @@ if (!empty($arr)) {
 
     <br><br><br>
     <div class="row">
-        <div id="matrikdivsub" class="col-md-12" style="display: none">
+        <div id="div_matrik_subkriteria" class="col-md-12" style="display: none">
 
             <div class="table-responsive">
-                <?php echo form_open('#', array('id' => 'prioformsub')); ?>
+                <?php echo form_open('#', array('id' => 'form_prio_subkriteria')); ?>
                 <input type="hidden" name="kriteriaid" value="<?= $kriteriaid; ?>" />
                 <table class="table table-bordered">
                     <thead>
@@ -332,9 +330,11 @@ if (!empty($arr)) {
                         <th>Kriteria</th>
                         <?php
                         foreach ($arr as $k => $v) {
-                        ?>
-                            <th><?= $v; ?></th>
-                        <?php
+                            ?>
+                            <th>
+                                <?= $v; ?>
+                            </th>
+                            <?php
                         }
                         ?>
                         <th>Jumlah</th>
@@ -352,12 +352,12 @@ if (!empty($arr)) {
                             $noSub2 = 0;
                             for ($i = 1; $i <= $jumlah; $i++) {
                                 $noSub2 += 1;
-                                echo '<td><input type="text" id="mn-k' . $noUtama2 . 'b' . $noSub2 . '" class="bg-white form-control form-control-sm" value="0" readonly=""/></td>';
+                                echo '<td><input type="text" id="subkriteria_mn-k' . $noUtama2 . 'b' . $noSub2 . '" class="bg-white form-control form-control-sm" value="0" readonly=""/></td>';
                             }
-                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="jml-b' . $noUtama2 . '" value="0" readonly=""/></td>';
-                            echo '<td><input type="text" name="prio[' . $k2 . ']" class="bg-white form-control form-control-sm" id="pri-b' . $noUtama2 . '" value="0" readonly=""/></td>';
-                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="prisub-b' . $noUtama2 . '" value="0" readonly=""/></td>';
-                            echo '<td><input type="text"  class="bg-white form-control form-control-sm" id="prisub-bhasil' . $noUtama2 . '" value="" readonly=""/></td>';
+                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="subkriteria_jml-b' . $noUtama2 . '" value="0" readonly=""/></td>';
+                            echo '<td><input type="text" name="prio[' . $k2 . ']" class="bg-white form-control form-control-sm" id="subkriteria_pri-b' . $noUtama2 . '" value="0" readonly=""/></td>';
+                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="subkriteria_prisub-b' . $noUtama2 . '" value="0" readonly=""/></td>';
+                            echo '<td><input type="text"  class="bg-white form-control form-control-sm" id="subkriteria_prisub-bhasil' . $noUtama2 . '" value="" readonly=""/></td>';
                             echo '</tr>';
                         }
                         ?>
@@ -378,9 +378,11 @@ if (!empty($arr)) {
                         <th>Kriteria</th>
                         <?php
                         foreach ($arr as $k => $v) {
-                        ?>
-                            <th><?= $v; ?></th>
-                        <?php
+                            ?>
+                            <th>
+                                <?= $v; ?>
+                            </th>
+                            <?php
                         }
                         ?>
                         <th>Jumlah</th>
@@ -395,9 +397,9 @@ if (!empty($arr)) {
                             $noSub3 = 0;
                             for ($i = 1; $i <= $jumlah; $i++) {
                                 $noSub3 += 1;
-                                echo '<td><input type="text" id="mptb-k' . $noUtama3 . 'b' . $noSub3 . '" class="bg-white form-control form-control-sm" value="0" readonly=""/></td>';
+                                echo '<td><input type="text" id="subkriteria_mptb-k' . $noUtama3 . 'b' . $noSub3 . '" class="bg-white form-control form-control-sm" value="0" readonly=""/></td>';
                             }
-                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="jmlmptb-b' . $noUtama3 . '" value="0" readonly=""/></td>';
+                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="subkriteria_jmlmptb-b' . $noUtama3 . '" value="0" readonly=""/></td>';
                             echo '</tr>';
                         }
                         ?>
@@ -423,9 +425,9 @@ if (!empty($arr)) {
                             $noUtama4 += 1;
                             echo '<tr>';
                             echo '<td>' . $v4 . '</td>';
-                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="jmlrk-b' . $noUtama4 . '" value="0" readonly=""/></td>';
-                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="priork-b' . $noUtama4 . '" value="0" readonly=""/></td>';
-                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="hasilrk-b' . $noUtama4 . '" value="0" readonly=""/></td>';
+                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="subkriteria_jmlrk-b' . $noUtama4 . '" value="0" readonly=""/></td>';
+                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="subkriteria_priork-b' . $noUtama4 . '" value="0" readonly=""/></td>';
+                            echo '<td><input type="text" class="bg-white form-control form-control-sm" id="subkriteria_hasilrk-b' . $noUtama4 . '" value="0" readonly=""/></td>';
                             echo '</tr>';
                         }
                         ?>
@@ -434,7 +436,8 @@ if (!empty($arr)) {
                         <tr>
                             <td colspan="3" align="center"><b>TOTAL</b></td>
                             <td>
-                                <input type="text" class="bg-white form-control form-control-sm" id="totalrk" value="0" readonly="" />
+                                <input type="text" class="bg-white form-control form-control-sm" id="subkriteria_totalrk"
+                                    value="0" readonly="" />
                             </td>
                         </tr>
                     </tfoot>
@@ -454,31 +457,36 @@ if (!empty($arr)) {
                         <tr>
                             <td>Jumlah</td>
                             <td>
-                                <input type="text" class="bg-white form-control form-control-sm" id="sumrk" value="0" readonly="" />
+                                <input type="text" class="bg-white form-control form-control-sm" id="subkriteria_sumrk"
+                                    value="0" readonly="" />
                             </td>
                         </tr>
                         <tr>
                             <td>n(Jumlah Kriteria)</td>
                             <td>
-                                <input type="text" class="bg-white form-control form-control-sm" id="sumkriteria" value="<?= $jumlah; ?>" readonly="" />
+                                <input type="text" class="bg-white form-control form-control-sm"
+                                    id="subkriteria_sumkriteria" value="<?= $jumlah; ?>" readonly="" />
                             </td>
                         </tr>
                         <tr>
                             <td>Maks(Jumlah/n)</td>
                             <td>
-                                <input type="text" class="bg-white form-control form-control-sm" id="summaks" value="0" readonly="" />
+                                <input type="text" class="bg-white form-control form-control-sm" id="subkriteria_summaks"
+                                    value="0" readonly="" />
                             </td>
                         </tr>
                         <tr>
                             <td>CI((Maks-n)/n)</td>
                             <td>
-                                <input type="text" class="bg-white form-control form-control-sm" id="sumci" value="0" readonly="" />
+                                <input type="text" class="bg-white form-control form-control-sm" id="subkriteria_sumci"
+                                    value="0" readonly="" />
                             </td>
                         </tr>
                         <tr>
                             <td>CR(CI/IR)</td>
                             <td>
-                                <input type="text" class="bg-white form-control form-control-sm" id="sumcr" value="0" readonly="" />
+                                <input type="text" class="bg-white form-control form-control-sm" id="subkriteria_sumcr"
+                                    value="0" readonly="" />
                             </td>
                         </tr>
                     </tbody>
@@ -487,10 +495,11 @@ if (!empty($arr)) {
 
         </div>
     </div>
-<?php
+    <?php
 } else {
-?>
-    <div class="alert alert-danger">Parameter belum dibuat. Silahkan buat terlebih dahulu <a href="<?= base_url(akses() . '/master/kriteria/subkriteria?kriteria=' . $kriteriaid); ?>">Di sini</a> </div>
-<?php
+    ?>
+    <div class="alert alert-danger">Parameter belum dibuat. Silahkan buat terlebih dahulu <a
+            href="<?= base_url(akses() . '/master/kriteria/subkriteria?kriteria=' . $kriteriaid); ?>">Di sini</a> </div>
+    <?php
 }
 ?>

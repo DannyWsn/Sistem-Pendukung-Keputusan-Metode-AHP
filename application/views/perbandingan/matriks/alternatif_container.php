@@ -39,7 +39,7 @@
                 <!-- /.card -->
             </div>
             <div class="col-md-9">
-                <div id="matriksub"></div>
+                <div id="matrik_alternatif"></div>
             </div>
         </div>
         <!-- /.row -->
@@ -51,40 +51,18 @@
         $.ajax({
             type: 'get',
             dataType: 'html',
-            url: "<?= base_url('Perbandingan/getalt'); ?>",
+            url: "<?= base_url('Matriks/alternatif'); ?>",
             data: "subkriteria=" + id,
             error: function() {
-                $("#matriksub").html('Gagal mengambil data matrik');
+                $("#matrik_alternatif").html('Gagal mengambil data matrik');
             },
             beforeSend: function() {
-                $("#matriksub").html('Mengambil data matrik. Tunggu sebentar');
+                $("#matrik_alternatif").html('Mengambil data matrik. Tunggu sebentar');
             },
             success: function(x) {
-                $("#matriksub").html(x);
+                console.log(x);
+                $("#matrik_alternatif").html(x);
             },
         });
-    }
-</script>
-
-<script>
-    function showDataSub(id) {
-        $.ajax({
-            method: "get",
-            dataType: 'html',
-            url: baseurl + "/Perbandingan/getalt/" + id,
-            error: function() {
-                $("#matriksub").html('Gagal mengambil data matrik');
-            },
-            beforeSend: function() {
-                $("#matriksub").html('Mengambil data matrik. Tunggu sebentar');
-            },
-            success: function(x) {
-                $("#matriksub").html(x);
-            },
-        });
-    }
-
-    function pilSubKrta(id) {
-        showDataSub(id.value);
     }
 </script>

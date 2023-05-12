@@ -107,7 +107,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url('Perbandingan/hasil'); ?>" <?php if ($page == "hasil" || $page == "Hasil") {
+                    <a href="<?= base_url('Penilaian/rank'); ?>" <?php if ($page == "hasil" || $page == "Hasil") {
                                                                             echo 'class="nav-link active" ';
                                                                         } else {
                                                                             echo 'class="nav-link" ';
@@ -119,6 +119,16 @@
             </ul>
         </li>
 
+        <li class="nav-item">
+            <a href="<?= base_url('Penilaian'); ?>" <?php if ($page == "Penilaian" ) {
+                                                            echo 'class="nav-link active"';
+                                                        } else {
+                                                            echo 'class="nav-link"';
+                                                        } ?>>
+                <i class="nav-icon fa fa-calculator"></i>
+                <p>Penilaian</p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="<?= base_url('admin/Auth'); ?>" <?php if ($page == "Auth" || $page == "auth") {
                                                             echo 'class="nav-link active"';
