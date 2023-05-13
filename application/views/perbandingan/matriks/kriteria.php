@@ -84,6 +84,7 @@ $jumlah = count($arr);
                 console.log($(this).serialize());
             },
             success: function (x) {
+                getRank();
 
             },
         });
@@ -216,7 +217,7 @@ $jumlah = count($arr);
     echo form_open('#', array('class' => 'form-horizontal', 'id' => 'form_entri_kriteria'));
     ?>
     <input type="hidden" name="crvalue" id="kriteria_crvalue" />
-    
+
     <div class="row">
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
@@ -293,7 +294,7 @@ $jumlah = count($arr);
 
     <div class="table-responsive">
         <?php echo form_open('#', array('id' => 'form_prio_kriteria')); ?>
-        
+
         <table class="table table-bordered table-striped">
             <thead>
                 <th colspan="<?= $jumlah + 3; ?>" class="text-center">Matrik Nilai Kriteria</th>

@@ -84,19 +84,27 @@
 </section>
 
 <script type="text/javascript">
-    $.ajax({
-        type: 'get',
-        dataType: 'html',
-        url: "<?= base_url('Penilaian/rank/'.$penilaian->id_penilaian); ?>",
-        data: $(this).serialize(),
-        error: function () {
-            $("#perangkingan").html('Gagal mengambil data perangkingan');
-        },
-        beforeSend: function () {
-            $("#perangkingan").html('Mengambil data... Tunggu sebentar');
-        },
-        success: function (x) {
-            $("#perangkingan").html(x);
-        },
-    });
+
+    function getRank() {
+
+        $.ajax({
+            type: 'get',
+            dataType: 'html',
+            url: "<?= base_url('Penilaian/rank/' . $penilaian->id_penilaian); ?>",
+            data: $(this).serialize(),
+            error: function () {
+                $("#perangkingan").html('Gagal mengambil data perangkingan');
+            },
+            beforeSend: function () {
+                $("#perangkingan").html('Mengambil data... Tunggu sebentar');
+            },
+            success: function (x) {
+                $("#perangkingan").html(x);
+                console.log("Sukses get data rank dari ajax");
+            },
+        });
+    }
+
+    getRank();
+
 </script>

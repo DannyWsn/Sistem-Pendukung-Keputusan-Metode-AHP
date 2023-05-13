@@ -1,6 +1,7 @@
 <div id="respon" class="hidden-print"></div>
 
 <div class="card card-blue card-outline">
+
     <div class="card-header">
         <h3 class="card-title">Data Perangkingan Supplier</h3>
         <div class="card-tools">

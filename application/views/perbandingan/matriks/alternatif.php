@@ -85,7 +85,7 @@ $jumlah = count($arr);
                 console.log($(this).serialize());
             },
             success: function (x) {
-
+                getRank();
             },
         });
     });
@@ -239,7 +239,7 @@ $jumlah = count($arr);
     ?>
     <input type="hidden" name="crvalue" id="alternatif_crvalue" />
     <input type="hidden" name="subkriteriaid" value="<?= $subkriteriaid; ?>" />
-    
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead>
@@ -319,7 +319,7 @@ $jumlah = count($arr);
         <div class="table-responsive">
             <?php echo form_open('#', array('id' => 'form_prio_alternatif')); ?>
             <input type="hidden" name="subkriteriaid" value="<?= $subkriteriaid; ?>" />
-            
+
             <table class="table table-bordered table-striped">
                 <thead>
                     <th colspan="<?= $jumlah + 5; ?>" class="text-center">Matrik Nilai Kriteria</th>

@@ -134,7 +134,7 @@ class Matriks extends CI_Controller
         }
     }
 
-    function id_prioritas($id_penilaian)
+    function update_kriteria_prioritas($id_penilaian)
     {
         $prio = $this->input->post('prio');
         if (!empty($prio)) {

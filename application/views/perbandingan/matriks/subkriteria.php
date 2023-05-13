@@ -87,6 +87,7 @@ if (!empty($arr)) {
                     console.log($(this).serialize());
                 },
                 success: function (x) {
+                    getRank();
 
                 },
             });

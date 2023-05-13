@@ -91,6 +91,7 @@ class Penilaian extends CI_Controller
         $output["kriteria"] = $this->mod_kriteria->kriteria_data_with_hasil($id_penilaian);
         $output['subkriteria'] = $this->mod_subkriteria->subkriteria_data_with_hasil($id_penilaian);
         $output['data'] = $this->fm->tampilkan_data()->result();
+        $output['output'] = $output;
 
 
 
